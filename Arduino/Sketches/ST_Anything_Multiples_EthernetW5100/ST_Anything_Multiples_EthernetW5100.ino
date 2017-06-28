@@ -135,7 +135,7 @@
 //W5100 Ethernet Shield Information
 //****************************************************************************************** 
 byte mac[] = {0x06,0x02,0x03,0x04,0x05,0x06}; //MAC address, leave first octet 0x06, change others to be unique //  <---You must edit this line!
-IPAddress ip(192, 168, 1, 200);               //Arduino device IP Address                   //  <---You must edit this line!
+IPAddress ip(192, 168, 1, 226);               //Arduino device IP Address                   //  <---You must edit this line!
 IPAddress gateway(192, 168, 1, 1);            //router gateway                              //  <---You must edit this line!
 IPAddress subnet(255, 255, 255, 0);           //LAN subnet mask                             //  <---You must edit this line!
 IPAddress dnsserver(192, 168, 1, 1);          //DNS server                                  //  <---You must edit this line!
@@ -235,7 +235,11 @@ void setup()
   st::Everything::callOnMsgSend = callback;
   
   //Create the SmartThings EthernetW5100 Communications Object
-  st::Everything::SmartThing = new st::SmartThingsEthernetW5100(mac, ip, gateway, subnet, dnsserver, serverPort, hubIp, hubPort, st::receiveSmartString);
+    //STATIC IP Assignment - Recommended
+    st::Everything::SmartThing = new st::SmartThingsEthernetW5100(mac, ip, gateway, subnet, dnsserver, serverPort, hubIp, hubPort, st::receiveSmartString);
+ 
+    //DHCP IP Assigment - Must set your router's DHCP server to provice a static IP address for this device's MAC address
+    //st::Everything::SmartThing = new st::SmartThingsEthernetW5100(mac, serverPort, hubIp, hubPort, st::receiveSmartString);
 
   //Run the Everything class' init() routine which establishes Ethernet communications with the SmartThings Hub
   st::Everything::init();
